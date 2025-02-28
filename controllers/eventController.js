@@ -14,21 +14,21 @@ const getEvents = async (req, res) => {
 // ✅ Create a new event
 const createEvent = async (req, res) => {
     try {
-        let { name, date, location, description } = req.body;
+        let { title, date, eventPlatform, description } = req.body;
 
         // ✅ Trim input values to remove unnecessary spaces
-        name = name?.trim();
+        title = title?.trim();
         date = date?.trim();
-        location = location?.trim();
+        eventPlatform = eventPlatform?.trim();
         description = description?.trim();
 
         // ✅ Validate required fields
-        if (!name || !date || !location) {
-            return res.status(400).json({ message: "Name, date, and location are required" });
+        if (!title || !date || !eventPlatform) {
+            return res.status(400).json({ message: "Title and eventPlatform are required" });
         }
 
         // ✅ Save event to database
-        const newEvent = new Event({ name, date, location, description });
+        const newEvent = new Event({ title, date, eventPlatform, description });
         await newEvent.save();
 
         res.status(201).json({ message: "🎉 Event created successfully", event: newEvent });
